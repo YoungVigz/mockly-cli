@@ -1,5 +1,5 @@
 #!/usr/bin/env node 
 
-const Hello = () => console.log("Hello World")
+import { Settings } from "./utils/settingsLoader";
 
-Hello()
+const settings = Settings.getInstance();

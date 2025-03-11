@@ -1,22 +1,33 @@
 {
   "name": "mockly",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "bin": {
     "mockly": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.js",
+    "dev": "ts-node src/index.ts",
     "dev:watch": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Gabriel Gałęza",
+  "license": "MIT",
+  "description": "CLI for generating fake data using custom schemas",
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.13.10",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0"
   }
 }
