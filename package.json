@@ -1,6 +1,6 @@
 {
   "name": "mockly",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "bin": {
     "mockly": "./dist/index.js"
@@ -18,6 +18,7 @@
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-typescript": "^7.26.0",
+    "@faker-js/faker": "^9.6.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.10",
     "babel-jest": "^29.7.0",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
-    "commander": "^13.1.0"
+    "commander": "^13.1.0",
+    "figlet": "^1.8.0"
   }
 }
