@@ -19,25 +19,25 @@ interface BaseField {
     optional?: boolean;
 }
 
-interface BasicField extends BaseField {
+export interface BasicField extends BaseField {
     type: 'string' | 'number' | 'boolean' | 'date' | 'uuid';
     min?: number;
     max?: number;
     format?: string;
 }
 
-interface FakerField extends BaseField {
+export interface FakerField extends BaseField {
     type: 'faker';
     method: string;
     args?: any[];
 }
 
-interface ReferenceField extends BaseField {
+export interface ReferenceField extends BaseField {
     type: 'reference';
     model: string;
 }
 
-interface CustomField extends BaseField {
+export interface CustomField extends BaseField {
     type: 'custom';
     generator: string;
 }
