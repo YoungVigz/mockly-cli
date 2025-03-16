@@ -19,28 +19,3 @@ registerGenerateCommand(program)
 
 
 program.parse(process.argv);
-
-/*
-
-import fs from "fs";
-import path from "path";
-import chalk from 'chalk';
-
-import { SchemaParser } from './parsers/schemaParser';
-
-const getSchemaPaths = (dirPath: string): string[] => {
-
-
-}
-
-const schemaPaths = getSchemaPaths(config.get("schemasDir"))
-
-schemaPaths.forEach(path => {
-    
-
-
-})
-
-
-
-*/

@@ -1,34 +1,33 @@
-import { Field, Schema } from "../types/schema";
+import { ProcessedSchema, ProcessedField } from "../types/schema";
 
 export class DataGenerator {
-    private parsedSchema: Schema;
+    private parsedSchema: ProcessedSchema; 
 
-    constructor(parsedSchema: Schema) {
+    constructor(parsedSchema: ProcessedSchema) { 
         this.parsedSchema = parsedSchema;
     }
 
-    generate() {
-
+    generate(): Record<string, any[]> {
         const models = this.parsedSchema.models;
-        const modelNames = Object.keys(models);
-    
-        let data: Record<string, Object[]>[] = [];
+        const generatedData: Record<string, any[]> = {};
 
-        modelNames.forEach(name => {
-            let count = models[name].count || 10;
+        Object.entries(models).forEach(([modelName, modelDef]) => {
+            const count = modelDef.count || 10;
+            const modelData: any[] = [];
 
-            let modelData: Record<string, Field>[] = [];
-    
             for (let i = 0; i < count; i++) {
+                const entry: Record<string, any> = {};
 
-                let fieldsData = models[name].fields;
+                Object.entries(modelDef.fields).forEach(([fieldName, field]) => {
+                    entry[fieldName] = (field as ProcessedField).generate();
+                });
 
-                modelData.push(fieldsData);
+                modelData.push(entry);
             }
-    
-            data.push({ [name]: modelData });
-        })
 
-        data.forEach(d => console.log(d));
+            generatedData[modelName] = modelData;
+        });
+
+        return generatedData;
     }
 }

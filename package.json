@@ -1,6 +1,6 @@
 {
   "name": "mockly",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "main": "index.js",
   "bin": {
     "mockly": "./dist/index.js"

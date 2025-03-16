@@ -8,10 +8,30 @@ export interface Model {
     fields: Record<string, Field>;
 }
 
+export interface ProcessedSchema {
+    models: Record<string, ProcessedModel>;
+}
+
+export interface ProcessedModel {
+    count?: number;
+    fields: Record<string, ProcessedField>;
+}
+
+export interface ProcessedField {
+    type: string;
+    generate: () => any;
+    model?: string;
+}
+
+export function isProcessedField(field: any): field is ProcessedField {
+    return typeof field.generate === 'function';
+}
+
 export type Field = 
     | BasicField
     | FakerField
     | ReferenceField
+    | EnumField
     | CustomField;
 
 interface BaseField {
@@ -24,6 +44,12 @@ export interface BasicField extends BaseField {
     min?: number;
     max?: number;
     format?: string;
+    probability?: number;
+}
+
+export interface EnumField extends BaseField {
+    type: 'enum';
+    enums: string[];
 }
 
 export interface FakerField extends BaseField {

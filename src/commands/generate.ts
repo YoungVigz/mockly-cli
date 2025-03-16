@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import { SchemaParser } from "../parsers/schemaParser";
-import { Schema } from "../types/schema";
+import { ProcessedSchema, Schema } from "../types/schema";
 
 import path from "path";
 import fs from "fs";
@@ -38,20 +38,25 @@ export function registerGenerateCommand(program: Command) {
             }
 
             // 2. Read, validate, parse schemas to objects
-            let parsedSchemas: Schema[] = [];
+            let parsedSchemas: ProcessedSchema[] = [];
 
             schemaPaths.forEach(path => {
                 const rawSchema = readSchemas(path);
-                const parsedSchema: Schema = new SchemaParser(rawSchema).parse();            
+                const parsedSchema: ProcessedSchema = new SchemaParser(rawSchema).parse();            
                 parsedSchemas.push(parsedSchema);
             });
 
             // 3. Generate data base on schemas
-            let generatedData = [];
+            const allData: Record<string, any[]> = {};
 
             parsedSchemas.forEach(schema => {
-                let data = new DataGenerator(schema).generate();
+                const data = new DataGenerator(schema).generate();
+                Object.assign(allData, data);
             });
+        
+            // 4. Export data
+            console.log(chalk.green('\nGenerated data:'));
+            console.dir(allData, { depth: null, colors: true });
 
             // 4. Parse and validate output options from schemas
             // 5. Base on options generate output files
