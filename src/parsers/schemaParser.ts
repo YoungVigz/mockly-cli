@@ -3,15 +3,20 @@ import { Model, Field, ProcessedSchema, ProcessedModel } from "../types/schema";
 
 export class SchemaParser {
   private rawSchema: any;
-  private parsedSchema: ProcessedSchema = { models: {} };
+  private parsedSchema: ProcessedSchema = { options: {}, models: {} };
 
   constructor(rawSchema: any) {
     this.rawSchema = rawSchema;
   }
 
   parse(): ProcessedSchema { 
+    this.processOptions();
     this.processModels();
     return this.parsedSchema;
+  }
+
+  private processOptions() {
+    this.parsedSchema.options = this.rawSchema.options;
   }
 
   private processModels(): void {    

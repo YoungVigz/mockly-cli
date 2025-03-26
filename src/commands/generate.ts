@@ -1,12 +1,13 @@
 import { Command } from "commander";
 import { SchemaParser } from "../parsers/schemaParser";
-import { ProcessedSchema, Schema } from "../types/schema";
+import { ProcessedSchema, Schema, SchemaOptions } from "../types/schema";
 
 import path from "path";
 import fs from "fs";
 import { ConfigurationManager } from "../utils/configurationManager";
 import chalk from "chalk";
 import { DataGenerator } from "../generators/dataGenerator";
+import { DataExporter } from "../exporters/exporter";
 
 interface GenerateOptions {
     schema?: string;
@@ -31,7 +32,7 @@ export function registerGenerateCommand(program: Command) {
 
             try {
                 schemaPaths = options.schema ? getPathToSchemas(options.schema) : getPathToSchemas();
-                console.log(schemaPaths) 
+                //console.log(schemaPaths) 
             } catch (error) {
                 console.error(chalk.red(error));
                 process.exit(1);
@@ -48,18 +49,17 @@ export function registerGenerateCommand(program: Command) {
 
             // 3. Generate data base on schemas
             const allData: Record<string, any[]> = {};
+            const schemaOptions: SchemaOptions[] = [];
 
             parsedSchemas.forEach(schema => {
                 const data = new DataGenerator(schema).generate();
                 Object.assign(allData, data);
+                schemaOptions.push(schema.options ? schema.options : {})
             });
         
-            // 4. Export data
-            console.log(chalk.green('\nGenerated data:'));
-            console.dir(allData, { depth: null, colors: true });
+            // 4. Export data, base on options generate output files
 
-            // 4. Parse and validate output options from schemas
-            // 5. Base on options generate output files
+            new DataExporter(allData, schemaOptions[0]);
 
         });
 }

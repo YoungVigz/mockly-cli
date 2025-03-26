@@ -1,5 +1,11 @@
 
+export interface SchemaOptions {
+    outputDir?: string,
+    outputType?: 'json' | 'null'
+}
+
 export interface Schema {
+    options?: SchemaOptions
     models: Record<string, Model>;
 }
   
@@ -9,6 +15,7 @@ export interface Model {
 }
 
 export interface ProcessedSchema {
+    options?: SchemaOptions
     models: Record<string, ProcessedModel>;
 }
 
