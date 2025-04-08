@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Field, ReferenceField, BasicField, ProcessedField } from '../types/schema';
+import chalk from 'chalk';
 
 export class FieldProcessor {
   static process(fieldDef: Field): ProcessedField {
@@ -64,7 +65,8 @@ export class FieldProcessor {
         };
 
       default:
-        throw new Error(`Unsupported field type: ${fieldDef.type}`);
+        console.error(chalk.red(`Error: Unsupported field type: ${fieldDef.type}`));
+        process.exit(1)
     }
   }
 }
