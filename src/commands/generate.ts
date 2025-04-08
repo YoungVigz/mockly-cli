@@ -11,6 +11,7 @@ import { DataExporter } from "../exporters/exporter";
 
 interface GenerateOptions {
     schema?: string;
+    output?: string;
 }
 
 export function registerGenerateCommand(program: Command) {
@@ -19,8 +20,13 @@ export function registerGenerateCommand(program: Command) {
         .description('Generate mock data from schema')
         .option(
             '-s, --schema <path>',
-            'Path to schema file',
+            'Path to schema file, or dir',
             (value) => path.resolve(process.cwd(), value)
+        )
+        .option(
+            '-o, --output <name>',
+            'Name of the output file',
+            (value) => value.toString()
         )
         .action(async (options: GenerateOptions) => {
 
@@ -58,6 +64,10 @@ export function registerGenerateCommand(program: Command) {
             });
         
             // 4. Export data, base on options generate output files
+
+            if(options.output) {
+                schemaOptions[0].fileName = options.output
+            }
 
             new DataExporter(allData, schemaOptions[0]);
 

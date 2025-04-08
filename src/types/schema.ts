@@ -1,7 +1,8 @@
 
 export interface SchemaOptions {
     outputDir?: string,
-    outputType?: 'json' | 'null'
+    outputType?: 'json' | 'null',
+    fileName?: string,
 }
 
 export interface Schema {

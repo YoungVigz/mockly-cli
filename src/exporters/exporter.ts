@@ -13,6 +13,10 @@ export class DataExporter {
         this.initExport();
     }
 
+    getFileName(): string {
+        return this.options.fileName ? this.options.fileName : "data"
+    }
+
     initExport() {
         const outputType: SchemaOptions["outputType"] = this.options.outputType;
 
@@ -41,7 +45,7 @@ export class DataExporter {
 
     jsonExporter() {
         const jsonDataExporter: JsonDataExporter = new JsonDataExporter(this.data, this.options)
-        jsonDataExporter.export();
+        jsonDataExporter.export(this.getFileName());
     }
 }
 
@@ -49,5 +53,5 @@ export interface IDataExporter {
     data: Record<string, any[]>
     options: SchemaOptions
 
-    export(): void
+    export(fileName: String): void
 }

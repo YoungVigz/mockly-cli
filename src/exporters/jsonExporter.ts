@@ -13,10 +13,10 @@ export class JsonDataExporter implements IDataExporter {
         this.options = options
     }
 
-    export() {
+    export(fileName: String) {
         const jsonData = JSON.stringify(this.data, null, 2);
 
-        fs.writeFileSync('data.json', jsonData, 'utf8');
+        fs.writeFileSync(fileName + ".json", jsonData, 'utf8');
 
         console.log(chalk.green('Data exported'))
     }
