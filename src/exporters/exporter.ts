@@ -32,7 +32,7 @@ export class DataExporter {
             break;
 
             default:
-                console.log(chalk.yellow('\nNo output type was specified parsing data to json'));
+                console.log(chalk.yellow('No output type was specified, or output type is unsupported parsing data to json'));
                 this.jsonExporter();
             break;
         }

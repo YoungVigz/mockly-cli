@@ -65,8 +65,11 @@ export class FieldProcessor {
         };
 
       default:
-        console.error(chalk.red(`Error: Unsupported field type: ${fieldDef.type}`));
-        process.exit(1)
+        if(typeof fieldDef.type === 'undefined') {
+          throw new Error(`Field must have a type field`);
+        }
+
+        throw new Error(`Unsupported field type: ${fieldDef.type}`);
     }
   }
 }

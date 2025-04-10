@@ -2,7 +2,7 @@
 
 import { version, description } from '../package.json';
 import { Command } from 'commander';
-import { registerGenerateCommand } from './commands/generate';
+import { registerGenerateCommand, registerTestSchemaCommand } from './commands/generate';
 import { ConfigurationManager } from './utils/configurationManager';
 
 ConfigurationManager.getInstance();
@@ -16,6 +16,7 @@ program
 
 
 registerGenerateCommand(program)
+registerTestSchemaCommand(program)
 
 
 program.parse(process.argv);

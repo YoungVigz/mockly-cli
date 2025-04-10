@@ -48,9 +48,22 @@ export function registerGenerateCommand(program: Command) {
             let parsedSchemas: ProcessedSchema[] = [];
 
             schemaPaths.forEach(path => {
-                const rawSchema = readSchemas(path);
-                const parsedSchema: ProcessedSchema = new SchemaParser(rawSchema).parse();            
-                parsedSchemas.push(parsedSchema);
+                let rawSchema
+                try {
+                    rawSchema = readSchemas(path);
+                } catch (error) {
+                    console.error(chalk.red(error));
+                    process.exit(1);
+                }
+              
+                try {
+                    const parsedSchema: ProcessedSchema = new SchemaParser(rawSchema).parse();            
+                    parsedSchemas.push(parsedSchema);
+                } catch (error) {
+                    console.error(chalk.red(error));
+                    process.exit(1);
+                }
+                
             });
 
             // 3. Generate data base on schemas
@@ -71,6 +84,50 @@ export function registerGenerateCommand(program: Command) {
 
             new DataExporter(allData, schemaOptions[0]);
 
+        });
+}
+
+export function registerTestSchemaCommand(program: Command) {
+    program.command('test')
+        .description('Test if your schemas are valid')
+        .option(
+            '-s, --schema <path>',
+            'Path to schema file, or dir',
+            (value) => path.resolve(process.cwd(), value)
+        )
+        .action(async (options: GenerateOptions) => {
+            let schemaPaths: string[];
+
+            try {
+                schemaPaths = options.schema ? getPathToSchemas(options.schema) : getPathToSchemas();
+            } catch (error) {
+                console.error(chalk.red(error));
+                process.exit(1);
+            }
+
+            let parsedSchemas: ProcessedSchema[] = [];
+
+            schemaPaths.forEach(path => {
+                let rawSchema
+                try {
+                    rawSchema = readSchemas(path);
+                } catch (error) {
+                    console.error(chalk.red(error));
+                    process.exit(1);
+                }
+              
+                try {
+                    const parsedSchema: ProcessedSchema = new SchemaParser(rawSchema).parse();            
+                    parsedSchemas.push(parsedSchema);
+                } catch (error) {
+                    console.error(chalk.red(error));
+                    process.exit(1);
+                }
+                
+            });
+
+
+            console.log(chalk.green(`Every thing OK!`))
         });
 }
 
@@ -127,7 +184,6 @@ const readSchemas = (pathToFile: string) => {
     try {
         return JSON.parse(fs.readFileSync(pathToFile, 'utf-8'));
     } catch (error) {
-        console.error(chalk.red(`Error occured while loading schema: ${pathToFile}:`), error);
-        process.exit(1);
+        throw new Error(`Error occured while loading schema: ${pathToFile}: SyntaxError: Invalid JSON format`)
     }
 }
