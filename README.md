@@ -4,6 +4,10 @@
 
 Mockly is a flexible CLI tool for generating mock data based on custom schemas. It supports exporting data to multiple formats and can also be used for setting up dummy content in supported databases.
 
+## 📷 Preview
+
+![preview](https://github.com/user-attachments/assets/3184c86d-a23a-41ce-83d7-8dfa9db65f14)
+
 ## 🚀 Features
 
 - **Generate mock data** from custom-defined schemas
