@@ -12,9 +12,10 @@ Mockly is a flexible CLI tool for generating mock data based on custom schemas. 
 - **Interactive CLI** for schema creation
 - **Configurable settings** via `.mocklyrc.json`
 
-## 📖 Documentation (WIP)
+## 📖 Documentation
 
-Comprehensive documentation is currently in progress. Stay tuned for detailed usage instructions, API references, and best practices.
+Documentation is still in development, but you can check current version of it.
+See `DOCUMENTATION.md` for details, or click [here](https://github.com/YoungVigz/mockly-cli/blob/main/DOCUMENTATION.md)
 
 ## 👥 Author
 
